@@ -1,0 +1,123 @@
+Q2:
+db.clientes.find({ cidade: "Fortaleza" })
+
+Q3:
+db.clientes.find({ 
+                  cidade: "Fortaleza",
+                  idade: { $gt: 25 } 
+                })
+
+Q4:
+db.produtos.find(
+                 { categoria: "Periféricos" },
+                 { nome: true, preco: true, _id: false }
+                )
+
+Q5:
+db.produtos.find({ preco: { $gte: 200, $lte: 400 } })
+
+Q6:
+db.clientes.find({ 
+                 $nor: [{ cidade: "Fortaleza" }],
+                 idade: { $not: { $gt: 20 } }
+                })
+
+Q7:
+db.clientes.find({ clienteVip: { $exists: true } })
+db.clientes.find({ idade: { $type: "number" } })
+
+Q8:
+db.clientes.insertOne({
+                       id: 5,
+                       nome: "Jorge",
+                       idade: 22,
+                       cidade: "Salvador"
+                     })
+
+Q9:
+db.clientes.updateOne(
+                      { nome: "Marcos" },
+                      { $set: { cidade: "Natal" } }
+                     )
+
+Q10:
+db.clientes.updateOne(
+                      { nome: "Lucas" },
+                      { 
+                        $set: { status: "ativo" },
+                        $inc: { idade: 1 }
+                     })
+
+Q11:
+db.clientes.replaceOne(
+                       { nome: "Julia" },
+                       { nome: "Julia", idade: 31, cidade: "Rio de Janeiro", clienteVip: true }
+                      )
+
+Q12:
+db.produtos.updateMany(
+                       {},
+                       { $rename: { "preco": "valor" } },
+                       { $unset: { "categoria": "" } }
+                      )
+
+Q13:
+db.produtos.deleteOne({ nome: "FIFA 25" })
+
+Q14:
+db.clientes.find({
+                  $or: [{ cidade: "São Paulo" },
+                        { cidade: "Recife" }]
+                })
+
+Q15:
+db.vendas.aggregate([{
+                       $lookup: {
+                       from: "produtos",
+                       localField: "produtoId",
+                       foreignField: "id",
+                       as: "produto_info"
+                       }
+                   }])
+
+Q16:
+db.vendas.aggregate([{
+                      $lookup: {
+                      from: "produtos",
+                      localField: "produtoId",
+                      foreignField: "id",
+                      as: "produto_info"
+                      }},
+                      {$unwind: "$produto_info"},
+                      {$group: {
+                      _id: "$produto_info.categoria",
+                      total_vendido: { $sum: "$quantidade" }
+                   }}])
+
+Q17:
+db.vendas.aggregate([{
+                      $lookup: {
+                      from: "produtos",
+                      localField: "produtoId",
+                      foreignField: "id",
+                      as: "produto_info"
+                      }},
+                      {$unwind: "$produto_info"},
+                      {$group: {
+                                _id: {
+                                venda_id: "$_id",
+                                categoria: "$produto_info.categoria"
+                               },
+                      total_produtos: { $sum: "$quantidade" }
+                   }}])
+
+Q18:
+db.produtos.find()
+                  .sort({ valor: -1 })
+                  .limit(2)
+
+Q19:
+db.produtos.find()
+                  .sort({ valor: -1 })
+                  .skip(2)
+                  .limit(3)

@@ -1,0 +1,27 @@
+{
+  "type": "Compass Connections",
+  "version": {
+    "$numberInt": "1"
+  },
+  "connections": [
+    {
+      "id": "26822845-3bd9-4156-a188-c5a931d88a42",
+      "lastUsed": {
+        "$date": {
+          "$numberLong": "1757374542083"
+        }
+      },
+      "favorite": {
+        "name": "Atividade",
+        "color": "color3"
+      },
+      "savedConnectionType": "favorite",
+      "connectionOptions": {
+        "connectionString": "mongodb://localhost:27017/",
+        "oidc": {
+          "serializedState": "eyJvaWRjUGx1Z2luU3RhdGVWZXJzaW9uIjoxLCJzdGF0ZSI6W119"
+        }
+      }
+    }
+  ]
+}
