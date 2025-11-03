@@ -1,0 +1,60 @@
+Questão 1:
+db.produtos.find({
+  categoria: "Periféricos",
+  preco: { $gt: 300 },
+  estoque: { $lt: 10 }
+});
+
+Questão 2:
+db.produtos.updateMany({}, { $set: { desconto: 0 } });
+
+db.produtos.updateOne(
+  { nome: "Monitor UltraWide" },
+  { $set: { desconto: 10 } }
+);
+
+db.produtos.find({}, { nome: 1, desconto: 1 });
+
+Questão 3:
+db.produtos.find({ categoria: "Audio" }, { nome: 1, estoque: 1 });
+
+db.produtos.updateMany(
+  { categoria: "Audio" },
+  { $inc: { estoque: 3 } }
+);
+
+db.produtos.find({ categoria: "Audio" }, { nome: 1, estoque: 1 });
+
+Questão 4:
+db.produtos.replaceOne(
+  { nome: "Console Zeta" },
+  { nome: "Console Zeta", preco: 3500, garantia: "2 anos" }
+);
+
+db.produtos.find({ nome: "Console Zeta" });
+
+Questão 5:
+db.produtos.find({}, { nome: 1, estoque: 1 });
+
+db.produtos.deleteMany({ estoque: { $lt: 5 } });
+
+db.produtos.find({}, { nome: 1, estoque: 1 });
+
+Questão 6:
+db.produtos.aggregate([
+  { $group: { _id: "$categoria", total: { $sum: 1 } } }
+]);
+
+Questão 7:
+db.produtos.aggregate([
+  { $group: { _id: "$categoria", mediaPreco: { $avg: "$preco" } } },
+  { $sort: { mediaPreco: -1 } }
+]);
+
+Questão 8:
+db.produtos.find().skip(2).limit(2);
+
+Questão 9:
+db.produtos.createIndex({ categoria: 1 });
+
+db.produtos.find({ categoria: "Periféricos" }).explain("executionStats");
